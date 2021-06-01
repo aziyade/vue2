@@ -1,0 +1,22 @@
+<div id="app">
+
+<table>	
+	<tr v-for="(fruit,index) in tableau">
+			<td>{{ index }}</td>	
+			<td>{{ fruit }}</td>	
+	</tr>
+</table>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+	const app = new Vue({ 
+		el: '#app',
+		data:{
+			tableau : ['pomme','poire','cerise']
+		},
+		methods:{
+		}
+	}); // vue
+</script>

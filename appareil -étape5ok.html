@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<title>Domotique</title>
+</head>
+<body>
+	<div id="app"> 
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+
+					<h2>Les Appareils appartement</h2>
+					<input type="text" v-model= "name">
+					<button @click="ajouter()" class="btn btn-warning" >AJOUTER </button>
+					<ul class="list-group">
+						<li 
+						v-for = "(a,index) in tableau"
+						class="list-group-item "
+						v-bind:class="{ 'list-group-item-success': getAllumer(index), 
+						'list-group-item-danger': getEteindre(index)}"
+						>
+						<h4> {{a.name}} -- {{a.status}}</h4>
+						<button @click="Allumer(index)" class="btn btn-success  "> ON</button>
+						<button  @click="Eteindre(index)" class="ml-2 btn btn-danger  "> OFF</button>
+						<button 
+						@click="enlever(index)"
+						class="btn btn-danger">
+						<i class="fa fa-trash"></i>
+					</button> 
+				</li>
+
+
+
+
+			</ul>
+			<br>
+			<button @click="Allumertt()"  class="btn btn-success ">ALL ON</button>
+
+			<button  @click="Eteindrett()" class="ml-2 btn btn-danger ">ALL OFF</button>
+		</div>
+	</div>
+</div>
+</div>
+
+<style>
+	.rouge{background-color: tomato}
+	.vert{background-color: green}
+</style>
+
+<
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<script>
+	const app = new Vue(
+	{
+		el :'#app',
+		data :
+		{
+			tableau :
+			[
+			
+			],
+			test2:false,
+			test:true,
+			name:''
+			
+		},
+		methods:{
+			getAllumer(i){
+				if (this.tableau[i].status == 'allumé') return true;
+				else return false;	
+			},
+			getEteindre(i){
+				if (this.tableau[i].status == 'allumé') return false;
+				else return true;	
+			},
+			Eteindre(i){
+				this.tableau[i].status= 'éteint';
+			},
+			Allumer(i){
+				this.tableau[i].status= 'allumé';
+			},
+			Allumertt(){
+				for (let a of this.tableau){
+					a.status= 'allumé';
+				}
+			},
+			Eteindrett(){
+				for (let a of this.tableau){
+					a.status= 'éteint';
+				}
+
+			},
+			ajouter()
+			{
+		    let a ={}; // creation a objet
+		    a.name = this.name;
+		    a.status= 'éteint';
+		    this.name = '';
+
+
+		        // on ajoute ds le tableau
+		        this.tableau.push(a);
+		        localStorage.tableau= JSON.stringify(this.tableau);
+		    },
+		    enlever(i)
+		    {
+		    	this.tableau.splice(i,1);
+		    },
+		    debut(){
+		    	console.log(localStorage.tableau);
+		    	if (localStorage.tableau != undefined) {
+		    		console.log('abc');
+		    		this.tableau = JSON.parse(localStorage.tableau);
+		    	}
+		    }
+		   
+		},
+
+		    mounted() {
+		    	this.debut();
+		    }
+
+		}); // vue
+
+	</script>
+
+
+</script>
+</body>
+</html>
